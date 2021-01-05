@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+struct contact {
+    string name;
+    string number;
+    string others;
+};
+struct node {
+    contact info;
+    node* link;
+};
+node* head = NULL;
+
+void sort() {
+    node* temp1 = head;
+    node* temp2 = head->link;//two pointers to compare to values
+    string strtemp = NULL;
+    while (temp1 != NULL || temp2 != NULL)//if there is at least one node will be true
+    {
+        if (temp1->link == NULL) {//if there is one node only
+            cout << "there is 1 item and it is: " << temp1->info.name << endl;
+        }
+        else {//if there are many nodes
+            while (temp1 != NULL) {
+                while (temp2 != NULL) {
+                    if (temp1->info.name > temp2->info.name) {//check if it sorted alphabetically in descending order
+                        strtemp = temp1->info.name;
+                        temp1->info.name = temp2->info.name;
+                        temp2->info.name = strtemp;
+                    }
+                    temp2 = temp2->link;
+                }
+                temp1 = temp1->link;
+                temp2 = temp1->link;
+            }
+        }
+    }
+    //display(); display function to print the sorted list
+}
+void searchByNumber() {
+    string srchnumber;
+    node* temp = head;
+    bool found = false;
+    cout << "enter the number to search \n";
+    cin >> srchnumber;
+    while (temp != NULL) {
+        for (int i = 0; temp->info.number[i] != NULL; i++) {
+            for (int j = 0; srchnumber[j] != NULL; j++) {
+                if (srchnumber[j] == temp->info.number[i]) {
+                    found = true;
+                }
+            }
+        }
+        if (found == false)cout << "the number doesn't exist\n";
+        else {
+            cout << "the contact name: " << temp->info.name << endl;
+            cout << "the contact number: " << temp->info.number << endl;
+        }
+        temp = temp->link;
+    }
+}
+void searchByName() {
+    string srchname;
+    node* temp = head;
+    bool found = false;
+    cout << "enter the name to be search\n";
+    cin >> srchname;//to recieve the contact what we search for 
+    while (temp != NULL) {
+        for (int i = 0; srchname[i] != NULL; i++) {
+            for (int j = 0; temp->info.name[j] != NULL; j++) {
+                if (srchname[i] == temp->info.name[j]) {//to check if we found the name we want or not 
+                    found = true;
+                }
+            }
+        }
+        if (found == false) cout << "the name doesn't exist\n";//message if the contact does not found
+        else {
+            cout << "the contact name is: " << temp->info.name << "\nthe contact number is: "
+                << temp->info.number << endl;
+        }
+        temp = temp->link;
+    }
+
+}
+
+int main()
+{
+}
